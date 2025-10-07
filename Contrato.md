@@ -3,7 +3,7 @@
 **Carrera:** Ingeniería de Software  
 **Materia:** Programación Orientada a Objetos  
 **Periodo:** Segundo Parcial / Proyecto Final  
-**Estudiante(s):** *Escribe tu nombre completo aquí*  
+**Estudiante(s):** *Oscar Santiago Abuawad*  
 **Fecha de entrega:** *AAAA-MM-DD*  
 
 ---
@@ -14,7 +14,7 @@
 |--------|-------------|
 | **Nombre del proyecto:** | *ApheliosID* |
 | **Tipo de aplicación:** | ☐ Escritorio 🗹 Web ☐ Móvil ☐ Otro: __________ |
-| **Lenguaje / entorno de desarrollo:** | *JavaScript* |
+| **Lenguaje / entorno de desarrollo:** | *JavaScript(Node.js) C#* |
 | **Repositorio Git (URL):** | *https://github.com/linuxenthusiastic/ApheliosID* |
 | **Uso de Inteligencia Artificial:** | ☐ No 🗹 Sí  |
 
