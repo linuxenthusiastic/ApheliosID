@@ -37,4 +37,22 @@ class Transaction
             Signature = signature;
             Hash = hash;
     }
+
+    public string CalculateHash()
+    {
+            string rawData = $"{From}{Type}{Data}{Timestamp:O}";
+            
+            byte[] bytes = Encoding.UTF8.GetBytes(rawData);
+            
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(bytes);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+            }
+    }
+
+    public bool ValidHash()
+    {
+        return Hash == CalculateHash();
+    }
 }
