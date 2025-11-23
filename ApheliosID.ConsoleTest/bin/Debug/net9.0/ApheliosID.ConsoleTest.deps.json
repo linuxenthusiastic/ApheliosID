@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "ApheliosID.ConsoleTest/1.0.0": {
+        "dependencies": {
+          "ApheliosID.Core": "1.0.0"
+        },
+        "runtime": {
+          "ApheliosID.ConsoleTest.dll": {}
+        }
+      },
+      "ApheliosID.Core/1.0.0": {
+        "runtime": {
+          "ApheliosID.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ApheliosID.ConsoleTest/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ApheliosID.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

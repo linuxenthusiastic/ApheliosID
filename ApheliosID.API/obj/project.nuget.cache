@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "vm3fo+drHrA=",
+  "success": true,
+  "projectFilePath": "/home/alone/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
+  "expectedPackageFiles": [
+    "/home/alone/.nuget/packages/microsoft.aspnetcore.openapi/9.0.11/microsoft.aspnetcore.openapi.9.0.11.nupkg.sha512",
+    "/home/alone/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
