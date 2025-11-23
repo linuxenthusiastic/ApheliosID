@@ -65,8 +65,8 @@ Console.WriteLine("All Blocks:\n");
 foreach (var block in aphelios.GetChain())
 {
     Console.WriteLine($"Block #{block.getIndex()}");
-    Console.WriteLine($"  Hash: {block.getHash()[..16]}...");
-    Console.WriteLine($"  Previous: {block.getPreviousHash()[..16]}...");
+    Console.WriteLine($"  Hash: {block.getHash()}");
+    Console.WriteLine($"  PreviousHash: {block.getPreviousHash()}");
     Console.WriteLine($"  Transactions: {block.getTransactions().Count}");
     Console.WriteLine($"  Timestamp: {block.getTimestamp():yyyy-MM-dd HH:mm:ss}");
     Console.WriteLine();

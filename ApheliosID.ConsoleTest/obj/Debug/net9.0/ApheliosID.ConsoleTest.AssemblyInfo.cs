@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApheliosID.ConsoleTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29ddcdc25bc9429be3f264a916a18b29c40f7e2b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f0153e7c613168b34f4c12d027c6f3a95b82dc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApheliosID.ConsoleTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApheliosID.ConsoleTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
