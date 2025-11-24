@@ -50,5 +50,20 @@ namespace ApheliosID.Core.Models
         {
             return To;
         }
+
+        public object getData()
+        {
+            return Data;
+        }
+
+        public DateTime getTimestamp()
+        {
+            return Timestamp;
+        }
+
+        public string getHash()
+        {
+            return Hash;
+        }
     }
 }

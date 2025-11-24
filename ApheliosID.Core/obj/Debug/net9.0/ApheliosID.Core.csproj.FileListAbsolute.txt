@@ -1,11 +1,11 @@
+/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.deps.json
+/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.dll
+/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.pdb
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.GeneratedMSBuildEditorConfig.editorconfig
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.AssemblyInfoInputs.cache
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.AssemblyInfo.cs
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.csproj.CoreCompileInputs.cache
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.sourcelink.json
-/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.deps.json
-/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.dll
-/home/alone/ApheliosID/ApheliosID.Core/bin/Debug/net9.0/ApheliosID.Core.pdb
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.dll
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/refint/ApheliosID.Core.dll
 /home/alone/ApheliosID/ApheliosID.Core/obj/Debug/net9.0/ApheliosID.Core.pdb
