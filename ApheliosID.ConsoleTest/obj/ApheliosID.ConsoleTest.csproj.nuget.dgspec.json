@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/alone/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj": {}
+    "/home/alone/Downloads/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj": {}
   },
   "projects": {
-    "/home/alone/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj": {
+    "/home/alone/Downloads/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/alone/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj",
+        "projectUniqueName": "/home/alone/Downloads/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj",
         "projectName": "ApheliosID.ConsoleTest",
-        "projectPath": "/home/alone/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj",
+        "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.ConsoleTest/ApheliosID.ConsoleTest.csproj",
         "packagesPath": "/home/alone/.nuget/packages/",
-        "outputPath": "/home/alone/ApheliosID/ApheliosID.ConsoleTest/obj/",
+        "outputPath": "/home/alone/Downloads/ApheliosID/ApheliosID.ConsoleTest/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/alone/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
-                "projectPath": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj"
+              "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
+                "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj"
               }
             }
           }
@@ -67,14 +67,14 @@
         }
       }
     },
-    "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
+    "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
+        "projectUniqueName": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
         "projectName": "ApheliosID.Core",
-        "projectPath": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
+        "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
         "packagesPath": "/home/alone/.nuget/packages/",
-        "outputPath": "/home/alone/ApheliosID/ApheliosID.Core/obj/",
+        "outputPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/alone/.nuget/NuGet/NuGet.Config"
