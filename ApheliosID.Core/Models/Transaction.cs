@@ -1,22 +1,23 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 
 namespace ApheliosID.Core.Models
 {
+    /// <summary>
+    /// Representa una transaction inmutable en la blockchain
+    /// </summary>
     public class Transaction
     {
-        private string From { get;}
-        private string To { get;}
-        private object Data { get;}
-        private DateTime Timestamp { get;}
-        private string Hash { get;}
+        private string From { get; }
+        private string To { get; }
+        private object Data { get; }
+        private DateTime Timestamp { get; }
+        private string Hash { get; }
 
         public Transaction(string from, string to, object data)
         {
-            From = from;
-            To = to;
-            Data = data;
+            From = from ?? throw new ArgumentNullException(nameof(from));
+            To = to ?? throw new ArgumentNullException(nameof(to));
+            Data = data ?? throw new ArgumentNullException(nameof(data));
             Timestamp = DateTime.UtcNow;
             Hash = CalculateHash();
         }
@@ -41,29 +42,10 @@ namespace ApheliosID.Core.Models
             });
         }
 
-        public string getFrom()
-        {
-            return From;
-        }
-
-        public string getTo()
-        {
-            return To;
-        }
-
-        public object getData()
-        {
-            return Data;
-        }
-
-        public DateTime getTimestamp()
-        {
-            return Timestamp;
-        }
-
-        public string getHash()
-        {
-            return Hash;
-        }
+        public string getFrom() => From;
+        public string getTo() => To;
+        public object getData() => Data;
+        public DateTime getTimestamp() => Timestamp;
+        public string getHash() => Hash;
     }
 }

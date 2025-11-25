@@ -1,20 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
-using ApheliosID.Core;
+using ApheliosID.Core.Interfaces;
 using ApheliosID.Core.Models;
 using ApheliosID.API.DTOs;
 
 namespace ApheliosID.API.Controllers
 {
+    /// <summary>
+    /// Controlador para operaciones de blockchain
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class BlockchainController : ControllerBase
     {
-        private readonly Blockchain _blockchain;
+        private readonly IBlockchainService _blockchainService;
         private readonly ILogger<BlockchainController> _logger;
 
-        public BlockchainController(Blockchain blockchain, ILogger<BlockchainController> logger)
+        public BlockchainController(IBlockchainService blockchainService, ILogger<BlockchainController> logger)
         {
-            _blockchain = blockchain;
+            _blockchainService = blockchainService;
             _logger = logger;
         }
 
@@ -24,7 +27,7 @@ namespace ApheliosID.API.Controllers
         {
             _logger.LogInformation("Getting entire blockchain");
 
-            var blocks = _blockchain.GetChain().Select(block => new BlockResponseDto
+            var blocks = _blockchainService.GetChain().Select(block => new BlockResponseDto
             {
                 Index = block.getIndex(),
                 Timestamp = block.getTimestamp(),
@@ -49,7 +52,7 @@ namespace ApheliosID.API.Controllers
         public ActionResult<object> GetStats()
         {
             _logger.LogInformation("Getting blockchain stats");
-            return Ok(_blockchain.GetStats());
+            return Ok(_blockchainService.GetStats());
         }
 
         [HttpGet("block/{index}")]
@@ -59,7 +62,7 @@ namespace ApheliosID.API.Controllers
         {
             _logger.LogInformation("Getting block by index: {Index}", index);
 
-            var block = _blockchain.GetBlockByIndex(index);
+            var block = _blockchainService.GetBlockByIndex(index);
 
             if (block == null)
             {
@@ -92,7 +95,7 @@ namespace ApheliosID.API.Controllers
         {
             _logger.LogInformation("Getting latest block");
 
-            var block = _blockchain.GetLatestBlock();
+            var block = _blockchainService.GetLatestBlock();
 
             var blockDto = new BlockResponseDto
             {
@@ -120,13 +123,13 @@ namespace ApheliosID.API.Controllers
         {
             _logger.LogInformation("Validating blockchain");
 
-            bool isValid = _blockchain.IsChainValid();
+            bool isValid = _blockchainService.IsChainValid();
 
             return Ok(new
             {
                 isValid,
-                message = isValid ? "Blockchain is valid" : "Blockchain is invalid",
-                totalBlocks = _blockchain.GetChain().Count,
+                message = isValid ? "✅ Blockchain is valid" : "❌ Blockchain is invalid",
+                totalBlocks = _blockchainService.GetChain().Count,
                 timestamp = DateTime.UtcNow
             });
         }
@@ -138,7 +141,7 @@ namespace ApheliosID.API.Controllers
         {
             _logger.LogInformation("Forcing block creation");
 
-            var block = _blockchain.ForceCreateBlock();
+            var block = _blockchainService.ForceCreateBlock();
 
             if (block == null)
             {

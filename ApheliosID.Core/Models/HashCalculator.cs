@@ -1,7 +1,9 @@
 using System;
 using System.Text;
 using System.Security.Cryptography;
-
+    /// <summary>
+    /// Calculador de hashes SHA256
+    /// Responsabilidad: Generar hashes criptográficos
 public class HashCalculator
 {
     private string rawData{get;}

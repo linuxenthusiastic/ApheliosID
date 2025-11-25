@@ -1,4 +1,5 @@
-using ApheliosID.Core;
+using ApheliosID.Core.Interfaces;
+using ApheliosID.Core.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +10,9 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "ApheliosID Blockchain API",
+        Title = "ApheliosID - Blockchain API",
         Version = "v1",
-        Description = "API REST para interactuar con la blockchain ApheliosID",
+        Description = "API REST para blockchain con identidades descentralizadas",
         Contact = new OpenApiContact
         {
             Name = "ApheliosID Team"
@@ -19,16 +20,16 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddSingleton<Blockchain>(provider =>
+builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
 {
-    var logger = provider.GetRequiredService<ILogger<Blockchain>>();
-    logger.LogInformation("Initializing ApheliosID Blockchain...");
+    var logger = provider.GetRequiredService<ILogger<BlockchainService>>();
+    logger.LogInformation("🔗 Initializing Blockchain Service...");
     
-    var blockchain = new Blockchain(transactionsPerBlock: 5);
+    var service = new BlockchainService(transactionsPerBlock: 5);
     
-    logger.LogInformation("Blockchain initialized with {Count} blocks", blockchain.GetChain().Count);
+    logger.LogInformation("✅ Blockchain initialized with {Count} blocks", service.GetChain().Count);
     
-    return blockchain;
+    return service;
 });
 
 builder.Services.AddCors(options =>

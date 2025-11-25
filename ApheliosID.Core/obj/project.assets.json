@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
+      "projectUniqueName": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
       "projectName": "ApheliosID.Core",
-      "projectPath": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
+      "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj",
       "packagesPath": "/home/alone/.nuget/packages/",
-      "outputPath": "/home/alone/ApheliosID/ApheliosID.Core/obj/",
+      "outputPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alone/.nuget/NuGet/NuGet.Config"
