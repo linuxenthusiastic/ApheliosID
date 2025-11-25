@@ -51,12 +51,6 @@ Un DID es un identificador único que **tú controlas**, a diferencia de:
 - 📦 Auto-cierre de bloques (configurable)
 - 🚫 Sin minería (blockchain privada)
 
-### Identidades Descentralizadas
-- 🆔 Generación de DIDs únicos
-- 🔐 Criptografía asimétrica RSA 2048 bits
-- 📝 Metadatos personalizables
-- ✅ Sistema de activación/desactivación
-
 ### API REST
 - 📡 7 endpoints documentados
 - 📚 Swagger UI integrado
