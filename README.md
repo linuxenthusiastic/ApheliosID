@@ -1,479 +1,426 @@
+# 🔐 ApheliosID - Blockchain de Identidades Descentralizadas
 
+> Sistema de identidades descentralizadas (DIDs) y credenciales verificables con blockchain inmutable
 
-🔐 ApheliosID
-=============
+[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-12.0-239120)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Blockchain de Identidades Descentralizadas y Credenciales Verificables
+---
 
-.NET 9.0 C# 12.0 RSA 2048 JWT Auth Blockchain
+## 📋 Tabla de Contenidos
 
-📋 Tabla de Contenidos
-----------------------
+- [Características](#características)
+- [Arquitectura](#arquitectura)
+- [Tecnologías](#tecnologías)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Endpoints API](#endpoints-api)
+- [Seguridad](#seguridad)
+- [Ejemplos](#ejemplos)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Conceptos OOP](#conceptos-oop)
+- [Principios SOLID](#principios-solid)
 
-*   [✨ Características](#caracteristicas)
-*   [🏗️ Arquitectura](#arquitectura)
-*   [🛠️ Tecnologías](#tecnologias)
-*   [📦 Instalación](#instalacion)
-*   [🚀 Uso](#uso)
-*   [📡 Endpoints API](#endpoints)
-*   [🔐 Seguridad](#seguridad)
-*   [💡 Ejemplos](#ejemplos)
-*   [📁 Estructura del Proyecto](#estructura)
+---
 
-✨ Características
------------------
+## ✨ Características
 
-#### 🔗 Blockchain Inmutable
+### 🔗 Blockchain Inmutable
+- Cadena de bloques con proof-of-work
+- Transacciones agrupadas en bloques
+- Historial completo y auditable
+- Validación de integridad
 
-*   Proof-of-work
-*   Bloques enlazados
-*   Historial auditable
-*   Validación de integridad
+### 🆔 Identidades Descentralizadas (DIDs)
+- Generación de DIDs basados en claves públicas
+- Criptografía asimétrica RSA 2048
+- Zero-Knowledge: servidor nunca ve claves privadas
+- Registro inmutable en blockchain
 
-#### 🆔 Identidades DIDs
+### 🎓 Credenciales Verificables
+- Emisión de credenciales firmadas digitalmente
+- Verificación sin intermediarios
+- Revocación de credenciales
+- Jerarquía de tipos (Academic, Professional, Certification)
 
-*   Generación basada en RSA
-*   Zero-Knowledge
-*   Descentralizado
-*   Sin intermediarios
+### 🔐 Autenticación JWT
+- Challenge-response sin contraseñas
+- Firma digital con clave privada
+- Tokens con expiración configurable
+- Herramienta de firmado externa
 
-#### 🎓 Credenciales
+---
 
-*   Firma digital
-*   Verificación offline
-*   Revocación
-*   Tipos especializados
+## 🏗️ Arquitectura
+```
+┌─────────────────────────────────────────────────┐
+│                  API REST                       │
+│         (Controllers + Swagger UI)              │
+└────────────────┬────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────┐
+│              SERVICES LAYER                     │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────┐   │
+│  │Identity  │ │Credential│ │  Blockchain  │   │
+│  │Service   │ │Service   │ │   Service    │   │
+│  └──────────┘ └──────────┘ └──────────────┘   │
+│  ┌──────────┐ ┌──────────┐                     │
+│  │  Crypto  │ │   Auth   │                     │
+│  │ Service  │ │ Service  │                     │
+│  └──────────┘ └──────────┘                     │
+└────────────────┬────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────┐
+│              DATA LAYER                         │
+│  ┌────────────────┐  ┌──────────────────────┐  │
+│  │  Dictionary    │  │     Blockchain       │  │
+│  │ (búsqueda O(1))│  │   (inmutabilidad)    │  │
+│  └────────────────┘  └──────────────────────┘  │
+└─────────────────────────────────────────────────┘
+```
 
-#### 🔐 Autenticación JWT
+### Patrones de Diseño
 
-*   Sin contraseñas
-*   Challenge-response
-*   Expiración configurable
-*   Firmado local
+- **Singleton**: Services registrados una sola vez
+- **Dependency Injection**: Inyección en constructores
+- **Repository Pattern**: Services actúan como repositorios
+- **Facade Pattern**: Controllers exponen API simplificada
+- **Strategy Pattern**: Diferentes algoritmos de validación
 
-🏗️ Arquitectura
-----------------
+---
 
-┌─────────────────────────────────────────────────┐ │ API REST │ │ (Controllers + Swagger UI) │ └────────────────┬────────────────────────────────┘ │ ┌────────────────▼────────────────────────────────┐ │ SERVICES LAYER │ │ ┌──────────┐ ┌──────────┐ ┌──────────────┐ │ │ │Identity │ │Credential│ │ Blockchain │ │ │ │Service │ │Service │ │ Service │ │ │ └──────────┘ └──────────┘ └──────────────┘ │ │ ┌──────────┐ ┌──────────┐ │ │ │ Crypto │ │ Auth │ │ │ │ Service │ │ Service │ │ │ └──────────┘ └──────────┘ │ └────────────────┬────────────────────────────────┘ │ ┌────────────────▼────────────────────────────────┐ │ DATA LAYER │ │ ┌────────────────┐ ┌──────────────────────┐ │ │ │ Dictionary │ │ Blockchain │ │ │ │ (búsqueda O(1))│ │ (inmutabilidad) │ │ │ └────────────────┘ └──────────────────────┘ │ └─────────────────────────────────────────────────┘
+## 🛠️ Tecnologías
 
-### Patrones de Diseño Implementados
+| Categoría | Tecnología |
+|-----------|-----------|
+| **Framework** | .NET 9.0 |
+| **Lenguaje** | C# 12.0 |
+| **Criptografía** | RSA 2048, SHA256 |
+| **API** | ASP.NET Core Web API |
+| **Documentación** | Swagger/OpenAPI |
+| **Autenticación** | JWT Bearer |
+| **Serialización** | System.Text.Json |
 
-*   **Singleton:** Services registrados una sola vez en la aplicación
-*   **Dependency Injection:** Inyección de dependencias en constructores
-*   **Repository Pattern:** Services actúan como repositorios de datos
-*   **Facade Pattern:** Controllers exponen una API simplificada
-*   **Strategy Pattern:** Diferentes estrategias de validación por tipo
+---
 
-🛠️ Tecnologías
----------------
-
-Categoría
-
-Tecnología
-
-**Framework**
-
-.NET 9.0
-
-**Lenguaje**
-
-C# 12.0
-
-**Criptografía**
-
-RSA 2048, SHA256
-
-**API**
-
-ASP.NET Core Web API
-
-**Documentación**
-
-Swagger/OpenAPI
-
-**Autenticación**
-
-JWT Bearer
-
-**Serialización**
-
-System.Text.Json
-
-📦 Instalación
---------------
+## 📦 Instalación
 
 ### Requisitos Previos
 
-*   .NET 9.0 SDK
-*   Git
-*   Editor de código (VS Code, Visual Studio, Rider)
+- .NET 9.0 SDK
+- Git
+- Editor de código
 
-### Pasos de Instalación
+### Pasos
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/tu-usuario/ApheliosID.git
+cd ApheliosID
 
-\# 1. Clonar repositorio git clone https://github.com/tu-usuario/ApheliosID.git cd ApheliosID # 2. Restaurar dependencias dotnet restore # 3. Compilar proyecto dotnet build # 4. Ejecutar aplicación dotnet run --project ApheliosID.API # 5. Abrir navegador en: http://localhost:5000
+# 2. Restaurar dependencias
+dotnet restore
 
-**✅ Listo!** El Swagger UI se abrirá automáticamente mostrando todos los endpoints disponibles.
+# 3. Compilar
+dotnet build
 
-🚀 Uso Rápido
--------------
+# 4. Ejecutar
+dotnet run --project ApheliosID.API
 
-### 1\. Crear una Identidad
+# 5. Abrir navegador
+# http://localhost:5000
+```
 
-POST /api/identity/create-with-keys Content-Type: application/json { "metadata": { "name": "Alice Smith", "email": "alice@example.com" } }
+---
+
+## 🚀 Uso
+
+### 1. Crear Identidad
+```bash
+POST /api/identity/create-with-keys
+Content-Type: application/json
+
+{
+  "metadata": {
+    "name": "Alice Smith",
+    "email": "alice@example.com"
+  }
+}
+```
 
 **Respuesta:**
+```json
+{
+  "did": "did:aphelios:abc123...",
+  "publicKey": "MIIBIjANBg...",
+  "privateKey": "MIIEvQIBAD...",
+  "warning": "⚠️ SAVE YOUR PRIVATE KEY"
+}
+```
 
-{ "did": "did:aphelios:abc123...", "publicKey": "MIIBIjANBg...", "privateKey": "MIIEvQIBAD...", "warning": "⚠️ SAVE YOUR PRIVATE KEY!" }
+### 2. Emitir Credencial
+```bash
+POST /api/credential/issue
 
-### 2\. Emitir una Credencial
+{
+  "issuerDid": "did:aphelios:mit",
+  "issuerPrivateKey": "MIIEvQIB...",
+  "subjectDid": "did:aphelios:alice",
+  "type": "AcademicCredential",
+  "claims": {
+    "degree": "Bachelor of Science",
+    "fieldOfStudy": "Computer Science"
+  }
+}
+```
 
-POST /api/credential/issue Content-Type: application/json { "issuerDid": "did:aphelios:mit", "issuerPrivateKey": "MIIEvQIB...", "subjectDid": "did:aphelios:alice", "type": "AcademicCredential", "claims": { "degree": "Bachelor of Science", "fieldOfStudy": "Computer Science", "graduationDate": "2024-06-15", "gpa": 3.8 } }
+### 3. Verificar Credencial
+```bash
+POST /api/credential/verify/cred_abc123
+```
 
-### 3\. Verificar Credencial
+### 4. Autenticación JWT
+```bash
+# Paso 1: Solicitar challenge
+POST /api/auth/challenge
+{"did": "did:aphelios:alice"}
 
-POST /api/credential/verify/cred\_abc123
+# Paso 2: Firmar con herramienta externa
+cd ApheliosID.Signer
+dotnet run
 
-**Respuesta:**
+# Paso 3: Verificar
+POST /api/auth/verify
+{
+  "did": "did:aphelios:alice",
+  "challenge": "xyz...",
+  "signature": "abc..."
+}
+```
 
-{ "credentialId": "cred\_abc123", "isValid": true, "isRevoked": false, "verifiedAt": "2024-12-09T12:00:00Z" }
+---
 
-### 4\. Autenticación JWT (Challenge-Response)
-
-\# Paso 1: Solicitar challenge POST /api/auth/challenge {"did": "did:aphelios:alice"} # Respuesta: {"challenge": "xyz789..."} # Paso 2: Firmar con herramienta externa cd ApheliosID.Signer dotnet run > Challenge: xyz789... > Private Key: MIIEvQIB... > Output: signature\_abc123... # Paso 3: Verificar y obtener JWT POST /api/auth/verify { "did": "did:aphelios:alice", "challenge": "xyz789...", "signature": "signature\_abc123..." } # Respuesta: { "token": "eyJhbGciOiJIUzI1NiIs...", "tokenType": "Bearer", "expiresIn": 3600, "did": "did:aphelios:alice" }
-
-📡 Endpoints API
-----------------
+## 📡 Endpoints API
 
 ### Identity (8 endpoints)
 
-Método
-
-Endpoint
-
-Descripción
-
-POST
-
-/api/identity/create-with-keys
-
-Crear identidad completa con claves
-
-POST
-
-/api/identity/register
-
-Registrar identidad existente
-
-POST
-
-/api/identity/generate-keys
-
-Generar par de claves RSA
-
-GET
-
-/api/identity/{did}
-
-Obtener identidad por DID
-
-GET
-
-/api/identity
-
-Listar todas las identidades
-
-POST
-
-/api/identity/{did}/deactivate
-
-Desactivar identidad
-
-POST
-
-/api/identity/{did}/activate
-
-Activar identidad
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/identity/create-with-keys` | Crear identidad completa |
+| POST | `/api/identity/register` | Registrar identidad |
+| POST | `/api/identity/generate-keys` | Generar claves |
+| GET | `/api/identity/{did}` | Obtener identidad |
+| GET | `/api/identity` | Listar todas |
+| POST | `/api/identity/{did}/deactivate` | Desactivar |
+| POST | `/api/identity/{did}/activate` | Activar |
 
 ### Auth (2 endpoints)
 
-Método
-
-Endpoint
-
-Descripción
-
-POST
-
-/api/auth/challenge
-
-Solicitar challenge aleatorio
-
-POST
-
-/api/auth/verify
-
-Verificar firma y obtener JWT
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/auth/challenge` | Solicitar challenge |
+| POST | `/api/auth/verify` | Verificar y obtener JWT |
 
 ### Credential (8 endpoints)
 
-Método
-
-Endpoint
-
-Descripción
-
-POST
-
-/api/credential/issue
-
-Emitir nueva credencial
-
-POST
-
-/api/credential/verify/{id}
-
-Verificar validez de credencial
-
-POST
-
-/api/credential/revoke/{id}
-
-Revocar credencial
-
-GET
-
-/api/credential/{id}
-
-Obtener credencial por ID
-
-GET
-
-/api/credential/subject/{did}
-
-Credenciales de una persona
-
-GET
-
-/api/credential/issuer/{did}
-
-Credenciales emitidas por organización
-
-GET
-
-/api/credential
-
-Listar todas las credenciales
-
-GET
-
-/api/credential/demo-inheritance
-
-Demostración de herencia OOP
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/credential/issue` | Emitir credencial |
+| POST | `/api/credential/verify/{id}` | Verificar |
+| POST | `/api/credential/revoke/{id}` | Revocar |
+| GET | `/api/credential/{id}` | Obtener |
+| GET | `/api/credential/subject/{did}` | Por sujeto |
+| GET | `/api/credential/issuer/{did}` | Por emisor |
+| GET | `/api/credential` | Listar todas |
+| GET | `/api/credential/demo-inheritance` | Demo herencia |
 
 ### Blockchain (6 endpoints)
 
-Método
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/api/blockchain` | Ver cadena |
+| GET | `/api/blockchain/block/{index}` | Ver bloque |
+| POST | `/api/blockchain/mine` | Minar |
+| GET | `/api/blockchain/validate` | Validar |
+| GET | `/api/blockchain/pending` | Pendientes |
+| GET | `/api/blockchain/stats` | Estadísticas |
 
-Endpoint
+**Total: 26 endpoints funcionales**
 
-Descripción
+---
 
-GET
-
-/api/blockchain
-
-Ver cadena completa
-
-GET
-
-/api/blockchain/block/{index}
-
-Ver bloque específico
-
-POST
-
-/api/blockchain/mine
-
-Minar bloque pendiente
-
-GET
-
-/api/blockchain/validate
-
-Validar integridad
-
-GET
-
-/api/blockchain/pending
-
-Ver transacciones pendientes
-
-GET
-
-/api/blockchain/stats
-
-Estadísticas de la blockchain
-
-**Total: 26 endpoints REST funcionales**
-
-🔐 Seguridad
-------------
+## 🔐 Seguridad
 
 ### Arquitectura Zero-Knowledge
+```
+┌─────────────────────────────────────────────────┐
+│      EL SERVIDOR NUNCA VE CLAVES PRIVADAS      │
+└─────────────────────────────────────────────────┘
 
-**⚠️ CRÍTICO: EL SERVIDOR NUNCA VE CLAVES PRIVADAS**
+1. Usuario genera claves LOCALMENTE
+2. Usuario firma challenges LOCALMENTE
+3. Servidor solo verifica con clave pública
+4. Clave privada NUNCA toca la red
+```
 
-*   Usuario genera claves LOCALMENTE
-*   Usuario firma challenges LOCALMENTE
-*   Servidor solo verifica con clave pública
-*   Clave privada NUNCA toca la red
+### Criptografía
 
-### Criptografía Implementada
+- **RSA 2048 bits**: Generación de pares de claves
+- **SHA-256**: Hash de firmas digitales
+- **PKCS#1**: Padding para firmas
+- **Base64**: Codificación
 
-*   **RSA 2048 bits:** Generación de pares de claves asimétricas
-*   **SHA-256:** Algoritmo de hash para firmas digitales
-*   **PKCS#1:** Padding estándar para firmas RSA
-*   **Base64:** Codificación de claves y firmas para transporte
+### Autenticación
 
-### Autenticación JWT
+- **JWT**: Tokens con expiración de 1 hora
+- **Challenge**: Expira en 5 minutos, un solo uso
+- **Firma digital**: Prueba de identidad
 
-*   **Tokens JWT:** Expiración de 1 hora
-*   **Challenge:** Expira en 5 minutos, un solo uso
-*   **Firma digital:** Prueba criptográfica de identidad
-*   **Sin contraseñas:** Sistema passwordless completo
+---
 
-### Tests de Seguridad Incluidos
+## 💡 Ejemplos
 
-*   SQL Injection attempts
-*   JWT Token Tampering
-*   Challenge Replay Attack
-*   Invalid Signature detection
-*   XSS in Metadata
+### Ejemplo Completo: Alice se Gradúa
+```bash
+# 1. MIT crea su identidad
+POST /api/identity/create-with-keys
+{"metadata": {"name": "MIT"}}
 
-💡 Ejemplo Completo: Alice se Gradúa
-------------------------------------
+# 2. Alice crea su identidad
+POST /api/identity/create-with-keys
+{"metadata": {"name": "Alice Smith"}}
 
-#### Escenario: Alice obtiene su diploma de MIT y busca trabajo en TechCorp
+# 3. MIT emite diploma a Alice
+POST /api/credential/issue
+{
+  "issuerDid": "did:aphelios:mit",
+  "subjectDid": "did:aphelios:alice",
+  "type": "AcademicCredential",
+  "claims": {"degree": "Bachelor of Science"}
+}
 
-### Paso 1: MIT crea su identidad
+# 4. Empleador verifica
+POST /api/credential/verify/cred_001
 
-POST /api/identity/create-with-keys {"metadata": {"name": "MIT", "type": "university"}} → Response: did:aphelios:mit
+# 5. Ver credenciales de Alice
+GET /api/credential/subject/did:aphelios:alice
+```
 
-### Paso 2: Alice crea su identidad
+---
 
-POST /api/identity/create-with-keys {"metadata": {"name": "Alice Smith"}} → Response: did:aphelios:alice
+## 📁 Estructura del Proyecto
+```
+ApheliosID/
+├── ApheliosID.Core/
+│   ├── Models/
+│   │   ├── Block.cs
+│   │   ├── Transaction.cs
+│   │   ├── Identity.cs
+│   │   ├── Credential.cs
+│   │   ├── VerifiableCredential.cs
+│   │   ├── AcademicCredential.cs
+│   │   ├── ProfessionalCredential.cs
+│   │   └── CertificationCredential.cs
+│   ├── Services/
+│   │   ├── BlockchainService.cs
+│   │   ├── CryptoService.cs
+│   │   ├── IdentityService.cs
+│   │   ├── CredentialService.cs
+│   │   └── AuthService.cs
+│   └── Interfaces/
+│
+├── ApheliosID.API/
+│   ├── Controllers/
+│   ├── DTOs/
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── ApheliosID.Signer/
+└── ApheliosID.SecurityTests/
+```
 
-### Paso 3: MIT emite diploma a Alice
+---
 
-POST /api/credential/issue { "issuerDid": "did:aphelios:mit", "issuerPrivateKey": "...", "subjectDid": "did:aphelios:alice", "type": "AcademicCredential", "claims": { "degree": "Bachelor of Science", "fieldOfStudy": "Computer Science", "graduationDate": "2024-06-15" } } → Response: cred\_001 (diploma creado)
-
-### Paso 4: Empleador verifica diploma
-
-POST /api/credential/verify/cred\_001 → Response: isValid: true ✅
-
-### Paso 5: TechCorp emite credencial de empleo
-
-POST /api/credential/issue (TechCorp emite credencial) → Response: cred\_002 (empleo creado)
-
-### Paso 6: Ver portafolio completo de Alice
-
-GET /api/credential/subject/did:aphelios:alice → Response: \[diploma MIT, empleo TechCorp, ...\]
-
-**✅ Resultado:** Alice tiene un portafolio digital verificable sin intermediarios
-
-📁 Estructura del Proyecto
---------------------------
-
-ApheliosID/ ├── ApheliosID.Core/ # Lógica de negocio │ ├── Models/ │ │ ├── Block.cs │ │ ├── Transaction.cs │ │ ├── Identity.cs │ │ ├── Credential.cs │ │ ├── VerifiableCredential.cs │ │ ├── AcademicCredential.cs │ │ ├── ProfessionalCredential.cs │ │ ├── CertificationCredential.cs │ │ └── AuthChallenge.cs │ ├── Services/ │ │ ├── BlockchainService.cs │ │ ├── CryptoService.cs │ │ ├── IdentityService.cs │ │ ├── CredentialService.cs │ │ └── AuthService.cs │ └── Interfaces/ │ └── IBlockchainService.cs │ ├── ApheliosID.API/ # REST API │ ├── Controllers/ │ │ ├── BlockchainController.cs │ │ ├── IdentityController.cs │ │ ├── CredentialController.cs │ │ ├── TransactionController.cs │ │ └── AuthController.cs │ ├── DTOs/ │ │ ├── IdentityRequestDto.cs │ │ ├── CredentialRequestDto.cs │ │ └── AuthRequestDto.cs │ ├── Program.cs │ └── appsettings.json │ ├── ApheliosID.Signer/ # Herramienta de firmado │ └── Program.cs │ ├── ApheliosID.SecurityTests/ # Tests de seguridad │ └── Program.cs │ └── README.md
-
-🎓 Conceptos OOP Implementados
-------------------------------
+## 🎓 Conceptos OOP
 
 ### Herencia
-
-VerifiableCredential (abstracta) ├── AcademicCredential (concreta) ├── ProfessionalCredential (concreta) └── CertificationCredential (concreta)
+```
+VerifiableCredential (abstracta)
+├── AcademicCredential
+├── ProfessionalCredential
+└── CertificationCredential
+```
 
 ### Polimorfismo
 
-*   `GetCredentialType()` - Cada tipo implementa diferente
-*   `ValidateSpecificClaims()` - Reglas específicas por tipo
-*   `IsValid()` - Método virtual que usa polimorfismo
+- `GetCredentialType()` - Implementación específica
+- `ValidateSpecificClaims()` - Reglas por tipo
+- `IsValid()` - Método virtual
 
 ### Encapsulación
 
-*   Properties privadas con getters públicos
-*   Métodos protected en clases base
-*   Ocultación de implementación interna
+- Properties privadas con getters públicos
+- Métodos protected en clases base
 
 ### Abstracción
 
-*   Clases abstractas que definen contratos
-*   Métodos abstractos que deben implementarse
-*   Interfaces que definen comportamiento
+- Clases abstractas con métodos abstractos
+- Interfaces que definen contratos
 
-📚 Principios SOLID
--------------------
+---
 
-Principio
+## 📚 Principios SOLID
 
-Implementación
+| Principio | Implementación |
+|-----------|----------------|
+| **S** - Single Responsibility | Cada Service una responsabilidad |
+| **O** - Open/Closed | Fácil agregar tipos de credenciales |
+| **L** - Liskov Substitution | Credenciales intercambiables |
+| **I** - Interface Segregation | Interfaces específicas |
+| **D** - Dependency Inversion | Dependency Injection |
 
-**S** - Single Responsibility
+---
 
-Cada Service tiene una única responsabilidad clara
+## 🧪 Testing
+```bash
+# Terminal 1: API
+dotnet run --project ApheliosID.API
 
-**O** - Open/Closed
+# Terminal 2: Tests
+cd ApheliosID.SecurityTests
+dotnet run
+```
 
-Fácil agregar nuevos tipos de credenciales sin modificar existentes
+**Tests:**
+- SQL Injection
+- JWT Tampering
+- Challenge Replay
+- Invalid Signature
+- XSS Protection
 
-**L** - Liskov Substitution
+---
 
-Cualquier credencial puede usarse donde se espera VerifiableCredential
+## 📄 Licencia
 
-**I** - Interface Segregation
+MIT License
 
-IBlockchainService específica sin métodos innecesarios
+---
 
-**D** - Dependency Inversion
-
-Dependency Injection en todos los constructores
-
-🧪 Testing
-----------
-
-### Ejecutar Tests de Seguridad
-
-\# Terminal 1: Iniciar API dotnet run --project ApheliosID.API # Terminal 2: Ejecutar tests cd ApheliosID.SecurityTests dotnet run
-
-**Tests Incluidos:**
-
-*   ✅ SQL Injection Protection
-*   ✅ JWT Tampering Detection
-*   ✅ Challenge Replay Prevention
-*   ✅ Invalid Signature Rejection
-*   ✅ XSS in Metadata Protection
-
-📄 Licencia
------------
-
-MIT License - Este proyecto es de código abierto y puede ser usado libremente.
-
-👨‍💻 Autor
------------
+## 👨‍💻 Autor
 
 **Tu Nombre**
+- GitHub: @tu-usuario
+- Email: tu@email.com
 
-*   GitHub: @tu-usuario
-*   Email: tu-email@example.com
-*   Universidad: Tu Universidad
+---
 
-📚 Referencias
---------------
+## 📚 Referencias
 
-*   [W3C DID Specification](https://www.w3.org/TR/did-core/)
-*   [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)
-*   [.NET Documentation](https://docs.microsoft.com/dotnet/)
-*   [JWT Introduction](https://jwt.io/introduction)
+- [W3C DID Specification](https://www.w3.org/TR/did-core/)
+- [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)
+- [.NET Documentation](https://docs.microsoft.com/dotnet/)
+- [JWT Introduction](https://jwt.io/introduction)
 
-⭐ Si este proyecto te ayudó, dale una estrella en GitHub ⭐
-----------------------------------------------------------
+---
+
+⭐ **Si este proyecto te ayudó, dale una estrella** ⭐
