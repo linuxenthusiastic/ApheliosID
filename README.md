@@ -407,10 +407,10 @@ MIT License
 ---
 
 ## 👨‍💻 Autor
+Oscar Santiago Abuawad
 
 **Tu Nombre**
-- GitHub: @tu-usuario
-- Email: tu@email.com
+- GitHub: @linuxenthusiastic
 
 ---
 
