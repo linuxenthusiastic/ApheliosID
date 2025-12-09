@@ -31,6 +31,20 @@ builder.Services.AddSingleton<IdentityService>(provider =>
     return new IdentityService(cryptoService);
 });
 
+
+builder.Services.AddSingleton<IdentityService>(provider =>
+{
+    var logger = provider.GetRequiredService<ILogger<IdentityService>>();
+    logger.LogInformation("🆔 Initializing Identity Service...");
+    
+    var cryptoService = provider.GetRequiredService<CryptoService>();
+    var service = new IdentityService(cryptoService);
+    
+    logger.LogInformation("✅ Identity Service initialized");
+    
+    return service;
+});
+
 // ✅ Registrar BlockchainService como Singleton
 builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
 {
