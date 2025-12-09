@@ -9,7 +9,7 @@ Console.WriteLine("════════════════════�
 var blockchain = new BlockchainService(transactionsPerBlock: 3);
 
 // ═══════════════════════════════════════
-// SETUP: Crear blockchain válida
+// SETUP: Crear blockchain valida
 // ═══════════════════════════════════════
 Console.WriteLine("📋 FASE 1: CREANDO BLOCKCHAIN VÁLIDA\n");
 
@@ -113,24 +113,24 @@ Console.WriteLine("════════════════════�
 // ═══════════════════════════════════════
 // ATAQUE 3: Validación de hash manipulado
 // ═══════════════════════════════════════
-Console.WriteLine("🔴 ATAQUE 3: SIMULANDO MODIFICACIÓN DE HASH\n");
+Console.WriteLine(" ATAQUE 3: SIMULANDO MODIFICACIÓN DE HASH\n");
 
-Console.WriteLine("⚠️  Escenario hipotético:");
+Console.WriteLine("  Escenario hipotético:");
 Console.WriteLine("   Si un hacker pudiera acceder a la memoria RAM");
 Console.WriteLine("   y modificar el hash de un bloque...\n");
 
 var originalHash = blockchain.GetChain()[1].getHash();
 Console.WriteLine($"   Hash original: {originalHash[..32]}...");
 
-Console.WriteLine("\n🔍 Ejecutando validación de integridad...\n");
+Console.WriteLine("\n Ejecutando validación de integridad...\n");
 
 bool isValid = blockchain.IsChainValid();
 
-Console.WriteLine($"   Resultado: {(isValid ? "✅ VÁLIDA" : "❌ INVÁLIDA")}\n");
+Console.WriteLine($"   Resultado: {(isValid ? " VÁLIDA" : " INVÁLIDA")}\n");
 
 if (isValid)
 {
-    Console.WriteLine("🛡️  RESULTADO: VALIDACIÓN DETECTARÍA MANIPULACIÓN\n");
+    Console.WriteLine("  RESULTADO: VALIDACIÓN DETECTARÍA MANIPULACIÓN\n");
     Console.WriteLine("   El método IsChainValid() recalcula hashes");
     Console.WriteLine("   y los compara con los almacenados.\n");
     Console.WriteLine("   Cualquier modificación sería detectada.\n");
@@ -141,7 +141,7 @@ Console.WriteLine("════════════════════�
 // ═══════════════════════════════════════
 // ATAQUE 4: Firmas digitales falsas
 // ═══════════════════════════════════════
-Console.WriteLine("🔴 ATAQUE 4: INTENTANDO FALSIFICAR FIRMA DIGITAL\n");
+Console.WriteLine(" ATAQUE 4: INTENTANDO FALSIFICAR FIRMA DIGITAL\n");
 
 try
 {
@@ -149,7 +149,7 @@ try
     
     // Universidad genera sus claves
     var (univPublicKey, univPrivateKey) = cryptoService.GenerateKeyPair();
-    Console.WriteLine("🎓 Universidad tiene:");
+    Console.WriteLine(" Universidad tiene:");
     Console.WriteLine($"   Clave Pública: {univPublicKey[..32]}...");
     Console.WriteLine($"   Clave Privada: (secreta)\n");
     
@@ -162,17 +162,15 @@ try
     });
     
     var validSignature = cryptoService.Sign(diploma, univPrivateKey);
-    Console.WriteLine("✅ Universidad firma diploma:");
+    Console.WriteLine(" Universidad firma diploma:");
     Console.WriteLine($"   Firma válida: {validSignature[..32]}...\n");
     
-    // Verificar firma válida
     bool isValidSignature = cryptoService.Verify(diploma, validSignature, univPublicKey);
-    Console.WriteLine($"✅ Verificación: {(isValidSignature ? "VÁLIDA ✅" : "INVÁLIDA ❌")}\n");
+    Console.WriteLine($" Verificación: {(isValidSignature ? "VÁLIDA " : "INVALIDA ")}\n");
     
     Console.WriteLine("═══════════════════════════════════════\n");
     
-    // HACKER intenta falsificar
-    Console.WriteLine("⚠️  HACKER intenta crear diploma falso:\n");
+    Console.WriteLine("  HACKER intenta crear diploma falso:\n");
     
     var fakeDiploma = JsonSerializer.Serialize(new
     {
@@ -181,22 +179,19 @@ try
         gpa = 100
     });
     
-    // Hacker NO tiene la clave privada de la universidad
-    // Solo puede inventar una firma aleatoria
     var fakeSignature = "FIRMA_FALSA_INVENTADA_POR_HACKER_123";
     
     Console.WriteLine($"   Diploma falso creado");
     Console.WriteLine($"   Firma inventada: {fakeSignature[..32]}...\n");
     
-    // Intentar verificar
-    Console.WriteLine("🔍 Verificando firma falsa...\n");
+    Console.WriteLine(" Verificando firma falsa...\n");
     bool isFakeValid = cryptoService.Verify(fakeDiploma, fakeSignature, univPublicKey);
     
-    Console.WriteLine($"   Resultado: {(isFakeValid ? "VÁLIDA ✅" : "INVÁLIDA ❌")}\n");
+    Console.WriteLine($"   Resultado: {(isFakeValid ? "VALIDA" : "INVALIDA ")}\n");
     
     if (!isFakeValid)
     {
-        Console.WriteLine("🛡️  RESULTADO: FALSIFICACIÓN DETECTADA\n");
+        Console.WriteLine("  RESULTADO: FALSIFICACION DETECTADA\n");
         Console.WriteLine("   • Hacker NO tiene clave privada de Universidad");
         Console.WriteLine("   • Firma inventada NO pasa verificación criptográfica");
         Console.WriteLine("   • Sistema detecta inmediatamente la falsificación\n");
@@ -204,7 +199,7 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"❌ Error: {ex.Message}\n");
+    Console.WriteLine($"Error: {ex.Message}\n");
 }
 
 Console.WriteLine("═══════════════════════════════════════\n");
@@ -217,20 +212,20 @@ Console.WriteLine("📊 RESUMEN DE PRUEBAS DE SEGURIDAD\n");
 Console.WriteLine("╔════════════════════════════════════════════════╗");
 Console.WriteLine("║  TIPO DE ATAQUE          │  RESULTADO          ║");
 Console.WriteLine("╠════════════════════════════════════════════════╣");
-Console.WriteLine("║  Modificar transacción   │  ❌ BLOQUEADO       ║");
-Console.WriteLine("║  Agregar bloque falso    │  ❌ BLOQUEADO       ║");
-Console.WriteLine("║  Manipular hash          │  ✅ DETECTABLE      ║");
-Console.WriteLine("║  Falsificar firma        │  ❌ IMPOSIBLE       ║");
+Console.WriteLine("║  Modificar transacción   │     BLOQUEADO       ║");
+Console.WriteLine("║  Agregar bloque falso    │     BLOQUEADO       ║");
+Console.WriteLine("║  Manipular hash          │     DETECTABLE      ║");
+Console.WriteLine("║  Falsificar firma        │     IMPOSIBLE       ║");
 Console.WriteLine("╚════════════════════════════════════════════════╝\n");
 
-Console.WriteLine("🔒 CONCLUSIÓN:");
+Console.WriteLine("EN CONCLUSION JEJE:");
 Console.WriteLine("   La blockchain es INMUTABLE y SEGURA gracias a:\n");
-Console.WriteLine("   ✅ Encapsulamiento estricto (campos readonly)");
-Console.WriteLine("   ✅ Enlace criptográfico entre bloques");
-Console.WriteLine("   ✅ Validación de hashes (IsChainValid)");
-Console.WriteLine("   ✅ Firmas digitales RSA 2048");
-Console.WriteLine("   ✅ Arquitectura que previene manipulación\n");
+Console.WriteLine("   Encapsulamiento estricto (campos readonly)");
+Console.WriteLine("   Enlace criptográfico entre bloques");
+Console.WriteLine("   Validación de hashes (IsChainValid)");
+Console.WriteLine("   Firmas digitales RSA 2048");
+Console.WriteLine("   Arquitectura que previene manipulación\n");
 
 Console.WriteLine("═══════════════════════════════════════");
-Console.WriteLine("✅ SECURITY TEST COMPLETADO");
+Console.WriteLine("SECURITY TEST COMPLETADO");
 Console.WriteLine("═══════════════════════════════════════");
