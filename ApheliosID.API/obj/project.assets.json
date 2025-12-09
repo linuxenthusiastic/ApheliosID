@@ -458,11 +458,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alone/Downloads/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
+      "projectUniqueName": "/home/alone/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
       "projectName": "ApheliosID.API",
-      "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
+      "projectPath": "/home/alone/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
       "packagesPath": "/home/alone/.nuget/packages/",
-      "outputPath": "/home/alone/Downloads/ApheliosID/ApheliosID.API/obj/",
+      "outputPath": "/home/alone/ApheliosID/ApheliosID.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alone/.nuget/NuGet/NuGet.Config"
@@ -477,8 +477,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
-              "projectPath": "/home/alone/Downloads/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj"
+            "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj": {
+              "projectPath": "/home/alone/ApheliosID/ApheliosID.Core/ApheliosID.Core.csproj"
             }
           }
         }

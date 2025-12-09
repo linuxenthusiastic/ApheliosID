@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Agregar servicios
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "ApheliosID - Blockchain API",
         Version = "v1",
-        Description = "API REST para blockchain con identidades descentralizadas",
+        Description = "API REST para blockchain con identidades descentralizadas y credenciales verificables",
         Contact = new OpenApiContact
         {
             Name = "ApheliosID Team"
@@ -20,6 +21,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// ✅ Registrar CryptoService como Singleton
+builder.Services.AddSingleton<CryptoService>();
+
+// ✅ Registrar IdentityService como Singleton
+builder.Services.AddSingleton<IdentityService>(provider =>
+{
+    var cryptoService = provider.GetRequiredService<CryptoService>();
+    return new IdentityService(cryptoService);
+});
+
+// ✅ Registrar BlockchainService como Singleton
 builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
 {
     var logger = provider.GetRequiredService<ILogger<BlockchainService>>();
@@ -32,6 +44,24 @@ builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
     return service;
 });
 
+// ✨ NUEVO: Registrar CredentialService como Singleton
+builder.Services.AddSingleton<CredentialService>(provider =>
+{
+    var logger = provider.GetRequiredService<ILogger<CredentialService>>();
+    logger.LogInformation("🎓 Initializing Credential Service...");
+    
+    var cryptoService = provider.GetRequiredService<CryptoService>();
+    var identityService = provider.GetRequiredService<IdentityService>();
+    var blockchainService = provider.GetRequiredService<IBlockchainService>() as BlockchainService;
+    
+    var service = new CredentialService(cryptoService, identityService, blockchainService);
+    
+    logger.LogInformation("✅ Credential Service initialized");
+    
+    return service;
+});
+
+// Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -44,6 +74,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Configurar pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

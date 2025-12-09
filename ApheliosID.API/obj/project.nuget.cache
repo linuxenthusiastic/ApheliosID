@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4ZkxGXhP4v4=",
+  "dgSpecHash": "axUW9ZucJ/8=",
   "success": true,
-  "projectFilePath": "/home/alone/Downloads/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
+  "projectFilePath": "/home/alone/ApheliosID/ApheliosID.API/ApheliosID.API.csproj",
   "expectedPackageFiles": [
     "/home/alone/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/home/alone/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
