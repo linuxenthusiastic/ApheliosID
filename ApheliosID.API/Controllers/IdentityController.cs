@@ -4,20 +4,64 @@ using ApheliosID.API.DTOs;
 
 namespace ApheliosID.API.Controllers
 {
+    /// <summary>
+    /// Controlador para operaciones de identidades descentralizadas
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
         private readonly IdentityService _identityService;
+        private readonly CryptoService _cryptoService;
         private readonly ILogger<IdentityController> _logger;
 
-        public IdentityController(IdentityService identityService, ILogger<IdentityController> logger)
+        public IdentityController(
+            IdentityService identityService,
+            CryptoService cryptoService,
+            ILogger<IdentityController> logger)
         {
             _identityService = identityService;
+            _cryptoService = cryptoService;
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("create-with-keys")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<object> CreateIdentityWithKeys([FromBody] CreateIdentityWithKeysDto dto)
+        {
+            _logger.LogInformation("Creating new identity with generated keys");
+
+            try
+            {
+                var (publicKey, privateKey) = _cryptoService.GenerateKeyPair();
+                
+                var did = _cryptoService.GenerateDid(publicKey);
+                
+                var identity = _identityService.CreateIdentity(did, publicKey, dto.Metadata);
+                
+                var response = new
+                {
+                    did = identity.getDid(),
+                    publicKey = identity.getPublicKey(),
+                    privateKey = privateKey, //solo se envia al cliente
+                    createdAt = identity.getCreatedAt(),
+                    isActive = identity.getIsActive(),
+                    metadata = identity.getMetadata(),
+                    warning = "⚠️ SAVE YOUR PRIVATE KEY - It will never be shown again!"
+                };
+
+                _logger.LogInformation("✅ Identity created: {DID}", did);
+
+                return CreatedAtAction(nameof(GetIdentity), new { did = identity.getDid() }, response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating identity with keys");
+                return StatusCode(500, new { message = "Error creating identity", error = ex.Message });
+            }
+        }
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<IdentityResponseDto> RegisterIdentity([FromBody] CreateIdentityDto dto)
@@ -26,27 +70,21 @@ namespace ApheliosID.API.Controllers
 
             try
             {
-                var identity = _identityService.RegisterIdentity(
-                    dto.Did,
-                    dto.PublicKey,
-                    dto.Metadata
-                );
+                var identity = _identityService.CreateIdentity(dto.Did, dto.PublicKey, dto.Metadata);
 
                 var response = new IdentityResponseDto
                 {
                     Did = identity.getDid(),
                     PublicKey = identity.getPublicKey(),
-                    PrivateKey = null,
+                    PrivateKey = null,  // NUNCA se retorna en este endpoint
                     CreatedAt = identity.getCreatedAt(),
                     IsActive = identity.getIsActive(),
                     Metadata = identity.getMetadata()
                 };
 
-                return CreatedAtAction(
-                    nameof(GetIdentity),
-                    new { did = identity.getDid() },
-                    response
-                );
+                _logger.LogInformation("✅ Identity registered: {DID}", dto.Did);
+
+                return CreatedAtAction(nameof(GetIdentity), new { did = identity.getDid() }, response);
             }
             catch (ArgumentException ex)
             {
@@ -58,6 +96,24 @@ namespace ApheliosID.API.Controllers
                 _logger.LogWarning("Identity already exists: {Message}", ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpPost("generate-keys")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<object> GenerateKeys()
+        {
+            _logger.LogInformation("Generating RSA key pair");
+
+            var (publicKey, privateKey) = _cryptoService.GenerateKeyPair();
+            var did = _cryptoService.GenerateDid(publicKey);
+
+            return Ok(new
+            {
+                did,
+                publicKey,
+                privateKey,
+                message = "Keys generated successfully. Use POST /api/identity/register to create the identity."
+            });
         }
 
         [HttpGet("{did}")]

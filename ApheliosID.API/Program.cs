@@ -21,31 +21,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// ✅ Registrar CryptoService como Singleton
-builder.Services.AddSingleton<CryptoService>();
 
-// ✅ Registrar IdentityService como Singleton
-builder.Services.AddSingleton<IdentityService>(provider =>
-{
-    var cryptoService = provider.GetRequiredService<CryptoService>();
-    return new IdentityService(cryptoService);
-});
-
-
-builder.Services.AddSingleton<IdentityService>(provider =>
-{
-    var logger = provider.GetRequiredService<ILogger<IdentityService>>();
-    logger.LogInformation("🆔 Initializing Identity Service...");
-    
-    var cryptoService = provider.GetRequiredService<CryptoService>();
-    var service = new IdentityService(cryptoService);
-    
-    logger.LogInformation("✅ Identity Service initialized");
-    
-    return service;
-});
-
-// ✅ Registrar BlockchainService como Singleton
+// ✅ Registrar BlockchainService como INTERFAZ
 builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
 {
     var logger = provider.GetRequiredService<ILogger<BlockchainService>>();
@@ -58,7 +35,33 @@ builder.Services.AddSingleton<IBlockchainService, BlockchainService>(provider =>
     return service;
 });
 
-// ✨ NUEVO: Registrar CredentialService como Singleton
+// ✅ Registrar la MISMA instancia como clase concreta
+builder.Services.AddSingleton<BlockchainService>(provider =>
+{
+    return (BlockchainService)provider.GetRequiredService<IBlockchainService>();
+});
+
+
+// ✅ Registrar CryptoService
+builder.Services.AddSingleton<CryptoService>();
+
+// ✅ Registrar IdentityService (SOLO UNA VEZ)
+builder.Services.AddSingleton<IdentityService>(provider =>
+{
+    var logger = provider.GetRequiredService<ILogger<IdentityService>>();
+    logger.LogInformation("🆔 Initializing Identity Service...");
+    
+    var cryptoService = provider.GetRequiredService<CryptoService>();
+    var blockchainService = provider.GetRequiredService<BlockchainService>();  // ← AGREGAR
+    
+    var service = new IdentityService(cryptoService, blockchainService);  // ← AGREGAR
+    
+    logger.LogInformation("✅ Identity Service initialized");
+    
+    return service;
+});
+
+// ✅ Registrar CredentialService
 builder.Services.AddSingleton<CredentialService>(provider =>
 {
     var logger = provider.GetRequiredService<ILogger<CredentialService>>();
@@ -66,7 +69,7 @@ builder.Services.AddSingleton<CredentialService>(provider =>
     
     var cryptoService = provider.GetRequiredService<CryptoService>();
     var identityService = provider.GetRequiredService<IdentityService>();
-    var blockchainService = provider.GetRequiredService<IBlockchainService>() as BlockchainService;
+    var blockchainService = provider.GetRequiredService<BlockchainService>();  // ← AHORA SÍ EXISTE
     
     var service = new CredentialService(cryptoService, identityService, blockchainService);
     
