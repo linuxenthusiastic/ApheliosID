@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApheliosID.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a831b98b21b6afbede44d8ee471099243603b27")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a08c8dd0a04933ce435540840e1b152dd131125")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApheliosID.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApheliosID.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

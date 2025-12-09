@@ -255,5 +255,61 @@ namespace ApheliosID.API.Controllers
 
             return Ok(response);
         }
+
+
+    [HttpGet("demo-inheritance")]
+public ActionResult<object> DemoInheritance()
+{
+    List<VerifiableCredential> credentials = new()
+    {
+        new AcademicCredential(
+            issuer: "did:aphelios:mit",
+            subject: "did:aphelios:alice",
+            degree: "Bachelor of Science",
+            institution: "MIT",
+            fieldOfStudy: "Computer Science",
+            graduationDate: new DateTime(2024, 6, 15),
+            gpa: 3.8m
+        ),
+        
+        new ProfessionalCredential(
+            issuer: "did:aphelios:techcorp",
+            subject: "did:aphelios:alice",
+            company: "TechCorp Inc.",
+            position: "Senior Software Engineer",
+            startDate: new DateTime(2024, 7, 1),
+            responsibilities: new List<string> { "Backend development", "Team leadership" }
+        ),
+    };
+
+    var results = credentials.Select(cred => new
+    {
+        id = cred.Id,
+        type = cred.GetCredentialType(),
+        isValid = cred.IsValid(),
+        info = cred.GetCredentialInfo()
+    }).ToList();
+
+    return Ok(new
+    {
+        message = "Demonstration of inheritance and polymorphism",
+        explanation = new
+        {
+            baseClass = "VerifiableCredential (abstract)",
+            derivedClasses = new[]
+            {
+                "AcademicCredential (concrete)",
+                "ProfessionalCredential (concrete)",
+            },
+            polymorphism = new
+            {
+                description = "All credentials stored in List<VerifiableCredential>",
+                abstractMethod = "GetCredentialType() - each type implements differently",
+                virtualMethod = "IsValid() - calls ValidateSpecificClaims() polymorphically"
+            }
+        },
+        credentials = results
+    });
+}
     }
 }
